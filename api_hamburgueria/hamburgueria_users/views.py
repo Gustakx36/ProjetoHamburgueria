@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from .entities import orders, logins, type_product, product, order_items
 
 def vazio(request):
-    return JsonResponse({'api_hamburgueria' : 'Projeto Unip Alunos : ()'})
+    return JsonResponse({'api_hamburgueria' : 'Projeto Unip Alunos : (Gustavo, Julio, Wellington)'})
 
 @csrf_exempt
 def order(request):
