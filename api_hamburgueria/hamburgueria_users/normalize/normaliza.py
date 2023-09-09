@@ -53,6 +53,7 @@ def normalizeParamsUpdate(params, columns, options=[]):
 
 def normalizeInsertOrder(params, columns):
     listaProdutos = params.getlist('pedidos[]')
+    print(listaProdutos)
     if listaProdutos == 0:
         return {
             'response' : True,
