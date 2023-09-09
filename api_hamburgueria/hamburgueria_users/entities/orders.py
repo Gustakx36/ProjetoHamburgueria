@@ -44,7 +44,7 @@ class Order:
                 ()
         """
         resultOrder = conn.execute_query(sql, [])
-        pedido = self.selectSimplesPorIdPedidoNovo()
+        pedido = self.selectSimplesPorIdPedidoNovo()['id']
         if resultOrder:
             result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto', 'id_pedido'], pedido)
             for item in result:
