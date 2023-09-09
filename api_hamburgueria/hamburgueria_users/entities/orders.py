@@ -36,6 +36,9 @@ class Order:
         }
 
     def insertSimples(self, params):
+        pedido = self.selectSimplesPorIdPedidoNovo()
+        result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'])
+        return result
         sql = f"""
             INSERT INTO {self.table}
                 ()
@@ -43,7 +46,8 @@ class Order:
                 ()
         """
         if conn.execute_query(sql, []):
-            result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'], self.selectSimplesPorIdPedidoNovo())
+            pedido = self.selectSimplesPorIdPedidoNovo()
+            result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'])
             return result
         return {
             'response' : True,

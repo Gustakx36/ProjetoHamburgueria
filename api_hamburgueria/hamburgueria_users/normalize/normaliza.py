@@ -51,7 +51,7 @@ def normalizeParamsUpdate(params, columns, options=[]):
         'values' : ', '.join(list(map(lambda x:f"{x} = %s", listColumns)))
     } 
 
-def normalizeInsertOrder(params, columns, pedido):
+def normalizeInsertOrder(params, columns):
     listaProdutos = params.getlist('pedidos[]')
     if listaProdutos == 0:
         return {
@@ -59,4 +59,10 @@ def normalizeInsertOrder(params, columns, pedido):
             'text' : f"Faltam os seguintes parametros (pedidos)"
         }
     for item in listaProdutos:
-        print(json.loads(item))
+        pedido_item = json.loads(item)
+        pedido = []
+        for keys in columns:
+            if not keys in columns:
+                return False
+            pedido.append(pedido_item[keys])
+            print(pedido)
