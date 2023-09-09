@@ -19,6 +19,7 @@ def order(request):
     if request.method == 'POST':
         print(request.POST)
         print(request.POST.getlist('pedidos[]'))
+        print('asas')
         return bRes.insertSimplesResponse(Object, metodo.getlist('pedidos[]'))
     return bRes.methodNotExist()
 
