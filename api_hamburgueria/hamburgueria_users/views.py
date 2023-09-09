@@ -8,19 +8,11 @@ def vazio(request):
 
 @csrf_exempt
 def order(request):
-    metodo = {
-        'GET' : request.GET,
-        'POST' : request.POST,
-        'DELETE' : ''
-    }[request.method]
     Object = orders.Order()
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
-        print(request.POST)
-        print(request.POST.getlist('pedidos[]'))
-        print('asas')
-        return bRes.insertSimplesResponse(Object, metodo.getlist('pedidos[]'))
+        return bRes.insertSimplesResponse(Object, request.POST)
     return bRes.methodNotExist()
 
 @csrf_exempt
@@ -35,20 +27,11 @@ def orderInt(request, int):
 
 @csrf_exempt
 def login(request):
-    metodo = {
-        'GET' : request.GET,
-        'POST' : request.POST,
-        'DELETE' : ''
-    }[request.method]
     Object = logins.Login()
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
-        print('a')
-        print(metodo.dict())
-        print('b')
-        print(int)
-        return bRes.insertSimplesResponse(Object, metodo.dict())
+        return bRes.insertSimplesResponse(Object, request.POST.dict())
     return bRes.methodNotExist()
 
 @csrf_exempt
@@ -63,16 +46,11 @@ def loginInt(request, int):
 
 @csrf_exempt
 def type(request):
-    metodo = {
-        'GET' : request.GET,
-        'POST' : request.POST,
-        'DELETE' : ''
-    }[request.method]
     Object = type_product.Type()
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
-        return bRes.insertSimplesResponse(Object, metodo.dict())
+        return bRes.insertSimplesResponse(Object, request.POST.dict())
     return bRes.methodNotExist()
 
 @csrf_exempt
@@ -87,16 +65,11 @@ def typeInt(request, int):
 
 @csrf_exempt
 def products(request):
-    metodo = {
-        'GET' : request.GET,
-        'POST' : request.POST,
-        'DELETE' : ''
-    }[request.method]
     Object = product.Product()
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
-        return bRes.insertSimplesResponse(Object, metodo.dict())
+        return bRes.insertSimplesResponse(Object, request.POST.dict())
     return bRes.methodNotExist()
 
 @csrf_exempt

@@ -43,10 +43,11 @@ class Order:
                 ()
         """
         if conn.execute_query(sql, []):
-            norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'], self.selectSimplesPorIdPedidoNovo())
+            result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'], self.selectSimplesPorIdPedidoNovo())
+            return result
         return {
             'response' : True,
-            'text' : f"{self.string.capitalize()} foi alterado com sucesso!"
+            'text' : f"Erro ao alterar o {self.string}!"
         }
 
     def updateSimples(self, params, id):
@@ -87,7 +88,7 @@ class Order:
         result = list(map(lambda x:x['COLUMN_NAME'], conn.read_query(sql)))
         return result
 
-# --- Fuções extras ---
+    # --- Fuções extras ---
 
     def selectSimplesPorIdPedidoNovo(self):
             sql = f"""
