@@ -43,7 +43,7 @@ class Order:
                 ()
         """
         if conn.execute_query(sql, []):
-            norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'], selectSimplesPorIdPedidoNovo())
+            norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'], self.selectSimplesPorIdPedidoNovo())
         return {'foi' : 'foi'}
 
     def updateSimples(self, params, id):
@@ -86,16 +86,16 @@ class Order:
 
 # --- Fuções extras ---
 
-def selectSimplesPorIdPedidoNovo(self):
-        sql = f"""
-            SELECT id, data_hora FROM
-                {self.table}
-            WHERE
-                nome = NULL
-                finalizado = 0
-            ORDER BY id 
-                DESC 
-            LIMIT 1;
-        """
-        result = conn.read_query(sql)
-        return result
+    def selectSimplesPorIdPedidoNovo(self):
+            sql = f"""
+                SELECT id, data_hora FROM
+                    {self.table}
+                WHERE
+                    nome = NULL
+                    finalizado = 0
+                ORDER BY id 
+                    DESC 
+                LIMIT 1;
+            """
+            result = conn.read_query(sql)
+            return result
