@@ -94,12 +94,12 @@ class Order:
                 SELECT id, data_hora FROM
                     {self.table}
                 WHERE
-                    nome_cliente = NULL
+                    nome_cliente IS NULL
                 AND
                     finalizado = 0
                 ORDER BY id 
                     DESC 
                 LIMIT 1;
             """
-            result = conn.read_query(sql)
+            result = conn.read_query_bind(sql, [], True)
             return result
