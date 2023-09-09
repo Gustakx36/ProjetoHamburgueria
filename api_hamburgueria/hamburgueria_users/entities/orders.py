@@ -94,7 +94,7 @@ class Order:
                 SELECT id, data_hora FROM
                     {self.table}
                 WHERE
-                    nome = NULL
+                    nome_cliente = NULL
                 AND
                     finalizado = 0
                 ORDER BY id 
