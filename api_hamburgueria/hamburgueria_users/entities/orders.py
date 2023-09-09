@@ -58,7 +58,7 @@ class Order:
         }
 
     def updateSimples(self, params, id):
-        paramsNormalize = norm.normalizeParamsUpdate(params, self.selectColunas(), self.listOptionsInsertIgnore)
+        paramsNormalize = norm.normalizeParamsUpdate(params, self.selectColunas(), self.listOptionsUpdateIgnore)
         if not paramsNormalize['response']:
             return {
                 'response' : False,
