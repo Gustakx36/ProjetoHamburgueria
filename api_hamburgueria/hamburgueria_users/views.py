@@ -105,29 +105,3 @@ def productsInt(request, int):
         return bRes.updateSimplesResponse(Object, request.POST.dict(), int)
     if request.method == 'DELETE':
         return bRes.deleteSimplesResponse(Object, int)
-
-@csrf_exempt
-def orderItem(request):
-    metodo = {
-        'GET' : request.GET,
-        'POST' : request.POST,
-        'DELETE' : ''
-    }[request.method]
-    Object = order_items.Order_items()
-    if request.method == 'GET':
-        return bRes.selectSimplesResponse(Object)
-    if request.method == 'POST':
-        return bRes.insertSimplesResponse(Object, metodo.dict())
-    return bRes.methodNotExist()
-
-@csrf_exempt
-def orderItemInt(request, int):
-    Object = order_items.Order_items()
-    if request.method == 'GET':
-        return bRes.selectSimplesPorIdResponse(Object, int)
-    if request.method == 'POST':
-        return bRes.updateSimplesResponse(Object, request.POST.dict(), int)
-    if request.method == 'DELETE':
-        return bRes.deleteSimplesResponse(Object, int)
-
-# Create your views here.

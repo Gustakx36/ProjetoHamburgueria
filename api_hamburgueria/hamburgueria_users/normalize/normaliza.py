@@ -49,3 +49,7 @@ def normalizeParamsUpdate(params, columns, options=[]):
         'values' : ', '.join(list(map(lambda x:f"{x} = %s", listColumns)))
     } 
 
+def normalizeInsertOrder(params, columns, pedido):
+    print(params)
+    print(columns)
+    print(pedido)
