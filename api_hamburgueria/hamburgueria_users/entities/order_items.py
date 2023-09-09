@@ -35,13 +35,7 @@ class Order_items:
             'object' : result
         }
 
-    def insertSimples(self, params):
-        paramsNormalize = norm.normalizeParamsInsert(params, self.selectColunas(), self.listOptionsInsertIgnore)
-        if not paramsNormalize['response']:
-            return {
-                'response' : False,
-                'text' : paramsNormalize['error']
-            }
+    def insertSimples(self, paramsNormalize):
         sql = f"""
             INSERT INTO {self.table}
                 ({paramsNormalize['columns']})

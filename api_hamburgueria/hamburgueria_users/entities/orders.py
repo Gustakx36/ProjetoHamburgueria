@@ -1,5 +1,6 @@
 from hamburgueria_users.connection import connection as conn
 from hamburgueria_users.normalize import normaliza as norm
+from hamburgueria_users.entities import order_items
 
 class Order:
     def __init__(self):
@@ -36,22 +37,21 @@ class Order:
         }
 
     def insertSimples(self, params):
-        pedido = self.selectSimplesPorIdPedidoNovo()
-        result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'])
-        return result
         sql = f"""
             INSERT INTO {self.table}
                 ()
             VALUES
                 ()
         """
-        if conn.execute_query(sql, []):
-            pedido = self.selectSimplesPorIdPedidoNovo()
-            result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'])
-            return result
+        resultOrder = conn.execute_query(sql, [])
+        pedido = self.selectSimplesPorIdPedidoNovo()
+        if resultOrder:
+            result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto', 'id_pedido'], pedido)
+            for item in result:
+                order_items.insertSimples(item)
         return {
-            'response' : True,
-            'text' : f"Erro ao alterar o {self.string}!"
+            'response' : resultOrder,
+            'text' : pedido
         }
 
     def updateSimples(self, params, id):

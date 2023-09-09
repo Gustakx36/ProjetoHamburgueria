@@ -1,7 +1,7 @@
 from .entities.buildResponse import buildResponse as bRes
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from .entities import orders, logins, type_product, product, order_items
+from .entities import orders, logins, type_product, product
 
 def vazio(request):
     return JsonResponse({'api_hamburgueria' : 'Projeto Unip Alunos : (Gustavo, Julio, Wellington)'})
