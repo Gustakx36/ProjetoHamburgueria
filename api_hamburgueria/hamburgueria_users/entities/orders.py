@@ -50,6 +50,7 @@ class Order:
             order = order_items.Order_items()
             for item in result:
                 order.insertSimples(item)
+            self.updateSimples(params.dict(), pedido)
         return {
             'response' : resultOrder,
             'text' : pedido
