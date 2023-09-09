@@ -17,7 +17,7 @@ def order(request):
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
-        return bRes.insertSimplesResponse(Object, metodo.dict())
+        return bRes.insertSimplesResponse(Object, metodo.getlist('pedidos'))
     return bRes.methodNotExist()
 
 @csrf_exempt
