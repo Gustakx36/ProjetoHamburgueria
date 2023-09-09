@@ -47,8 +47,9 @@ class Order:
         pedido = self.selectSimplesPorIdPedidoNovo()['id']
         if resultOrder:
             result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto', 'id_pedido'], pedido)
+            order = order_items.Order_items()
             for item in result:
-                order_items.insertSimples(item)
+                order.insertSimples(item)
         return {
             'response' : resultOrder,
             'text' : pedido
