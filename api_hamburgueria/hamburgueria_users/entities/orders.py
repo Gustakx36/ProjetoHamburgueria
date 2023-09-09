@@ -44,7 +44,10 @@ class Order:
         """
         if conn.execute_query(sql, []):
             norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto'], self.selectSimplesPorIdPedidoNovo())
-        return {'foi' : 'foi'}
+        return {
+            'response' : True,
+            'text' : f"{self.string.capitalize()} foi alterado com sucesso!"
+        }
 
     def updateSimples(self, params, id):
         paramsNormalize = norm.normalizeParamsUpdate(params, self.selectColunas(), self.listOptionsInsertIgnore)
@@ -92,6 +95,7 @@ class Order:
                     {self.table}
                 WHERE
                     nome = NULL
+                AND
                     finalizado = 0
                 ORDER BY id 
                     DESC 
