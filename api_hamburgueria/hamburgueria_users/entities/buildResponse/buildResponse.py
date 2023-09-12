@@ -8,6 +8,14 @@ def selectSimplesResponse(Objeto):
         }, status=200, json_dumps_params={'ensure_ascii': False})
     return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})
 
+def selectSimplesOrderItemResponse(Objeto, id_pedido):
+    result = Objeto.selectSimples(id_pedido)
+    if result['response']:
+        return JsonResponse({
+            'object' : result['object']
+        }, status=200, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})
+
 def selectSimplesPorIdResponse(Objeto, id):
     result = Objeto.selectSimplesPorId(id)
     if result['response']:

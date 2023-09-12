@@ -7,7 +7,7 @@ class Order:
         self.table = 'orders'
         self.primaryKey = 'id'
         self.listOptionsInsertIgnore = ['id', 'finalizado', 'data_hora', 'nome_cliente']
-        self.listOptionsUpdateIgnore = ['id', 'finalizado', 'data_hora', 'nome_cliente']
+        self.listOptionsUpdateIgnore = ['id', 'data_hora', 'nome_cliente']
         self.string = 'pedido'
 
     def selectSimples(self):
@@ -37,6 +37,12 @@ class Order:
         }
 
     def insertSimples(self, params):
+        paramsOK = norm.normalizeParamsOrder(params, ['nome_cliente', 'pedidos'])
+        if not paramsOK['response']:
+            return {
+                'response' : False,
+                'text' : paramsOK['error']
+            }
         sql = f"""
             INSERT INTO {self.table}
                 ()
@@ -47,11 +53,17 @@ class Order:
         pedido = self.selectSimplesPorIdPedidoNovo()['id']
         if resultOrder:
             result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto', 'id_pedido'], pedido)
-            order = order_items.Order_items()
-            for item in result:
-                order.insertSimples(item)
-            self.listOptionsUpdateIgnore.pop(3)
-            self.updateSimples(params.dict(), pedido)
+            if not result['response']:
+                return {
+                    'response' : False,
+                    'text' : result['error']
+                }
+            order_item = order_items.Order_items()
+            for item in result['params']:
+                order_item.insertSimples(item)
+            self.listOptionsUpdateIgnore.pop(2)
+            self.listOptionsUpdateIgnore.append('finalizado')
+            self.updateSimples(params, pedido)
         return {
             'response' : resultOrder,
             'text' : pedido

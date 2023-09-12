@@ -10,5 +10,7 @@ urlpatterns = [
     path('type', views.type),
     path('type/<int>', views.typeInt),
     path('product', views.products),
-    path('product/<int>', views.productsInt)
+    path('product/<int>', views.productsInt),
+    path('orderItem/<int>', views.orderItem),
+    path('orderUnique/<int>', views.orderItemInt),
 ]

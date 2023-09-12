@@ -9,12 +9,14 @@ class Order_items:
         self.listOptionsUpdateIgnore = ['id']
         self.string = 'item'
 
-    def selectSimples(self):
+    def selectSimples(self, id_pedido):
         sql = f"""
             SELECT * FROM
                 {self.table}
+            WHERE
+                id_pedido = %s
         """
-        result = conn.read_query(sql)
+        result = conn.read_query_bind(sql, [id_pedido], False)
         return {
             'response' : not result == None,
             'text' : f"{self.string.capitalize()}s não foram encontrados!",

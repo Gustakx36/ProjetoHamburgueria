@@ -9,7 +9,7 @@ def connection():
             host='localhost',
             user='root', #'root'
             passwd='', #''
-            database='hamburgueria',
+            database='Gustakx36$hamburgueria',
             port='3306'
         )
         return connection
