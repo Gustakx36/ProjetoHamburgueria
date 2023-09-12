@@ -10,7 +10,7 @@ def vazio(request):
     return JsonResponse({'response' : 'Projeto Unip Alunos : (Gustavo, Julio, Wellington)'})
 
 @csrf_exempt
-def order(request):
+def order(request, e):
     Object = orders.Order()
     requestJson = norm(request.body)
     if request.method == 'GET':
@@ -32,7 +32,7 @@ def orderInt(request, int):
     return bRes.methodNotExist()
 
 @csrf_exempt
-def login(request):
+def login(request, e):
     Object = logins.Login()
     requestJson = norm(request.body)
     if request.method == 'GET':
@@ -54,7 +54,7 @@ def loginInt(request, int):
     return bRes.methodNotExist()
 
 @csrf_exempt
-def type(request):
+def type(request, e):
     Object = type_product.Type()
     requestJson = norm(request.body)
     if request.method == 'GET':
@@ -76,7 +76,7 @@ def typeInt(request, int):
     return bRes.methodNotExist()
 
 @csrf_exempt
-def products(request):
+def products(request, e):
     Object = product.Product()
     requestJson = norm(request.body)
     if request.method == 'GET':

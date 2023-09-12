@@ -31,7 +31,7 @@ class Login:
         result = conn.read_query_bind(sql, [id], True)
         return {
             'response' : not result == None,
-            'text' : f"{self.string.capitalize()}s não foi encontrado!",
+            'text' : f"{self.string.capitalize()} não foi encontrado!",
             'object' : result
         }
 
