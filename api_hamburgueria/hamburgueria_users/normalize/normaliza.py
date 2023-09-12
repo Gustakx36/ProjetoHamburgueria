@@ -85,7 +85,14 @@ def normalizeParamsOrder(params, itens):
         'response' : True
     }
 
-def decodeParams(paramString):
+def normalizaExistenciaProdutos(params):
+    listaProdutos = []
+    for item in params['pedidos']:
+        listaProdutos.append(item['id_produto'])
+    return listaProdutos
+
+
+def normalizeDecodeParams(paramString):
     try:
         return json.loads(paramString)
     except JSONDecodeError:

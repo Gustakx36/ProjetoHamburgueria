@@ -1,6 +1,6 @@
 from hamburgueria_users.connection import connection as conn
 from hamburgueria_users.normalize import normaliza as norm
-from hamburgueria_users.entities import order_items
+from hamburgueria_users.entities import order_items, product
 
 class Order:
     def __init__(self):
@@ -43,6 +43,14 @@ class Order:
                 'response' : False,
                 'text' : paramsOK['error']
             }
+        produtosExistem = norm.normalizaExistenciaProdutos(params)
+        products = product.Product()
+        for item in produtosExistem:
+            if products.selectSimplesPorId(item)['response']:
+                return {
+                    'response' : False,
+                    'text' : 'Na lista de pedidos tem um ou mais produtos que não existem!'
+                }
         sql = f"""
             INSERT INTO {self.table}
                 ()
