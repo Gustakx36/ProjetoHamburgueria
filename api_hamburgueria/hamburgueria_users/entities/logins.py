@@ -5,8 +5,8 @@ class Login:
     def __init__(self):
         self.table = 'logins'
         self.primaryKey = 'id'
-        self.listOptionsInsertIgnore = ['id', 'ativo']
-        self.listOptionsUpdateIgnore = ['id']
+        self.listOptionsInsertIgnore = ['id', 'ativo', 'senha']
+        self.listOptionsUpdateIgnore = ['id', 'senha']
         self.string = 'login'
 
     def selectSimples(self):
@@ -36,6 +36,11 @@ class Login:
         }
 
     def insertSimples(self, params):
+        if not 'senha' in params:
+            return {
+                'response' : False,
+                'text' : 'Para criar um login é preciso a parametrização de um senha!'
+            }
         paramsNormalize = norm.normalizeParamsInsert(params, self.selectColunas(), self.listOptionsInsertIgnore)
         if not paramsNormalize['response']:
             return {
@@ -44,9 +49,10 @@ class Login:
             }
         sql = f"""
             INSERT INTO {self.table}
-                ({paramsNormalize['columns']})
+                ({paramsNormalize['columns']}, senha)
             VALUES
-                ({paramsNormalize['values']})"""
+                ({paramsNormalize['values']}, MD5(%s))"""
+        paramsNormalize['params'].append(params['senha'])
         result = conn.execute_query(sql, paramsNormalize['params'])
         if not result:
             return {

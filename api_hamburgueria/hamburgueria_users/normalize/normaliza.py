@@ -1,5 +1,5 @@
-import json
 from json import JSONDecodeError
+import json
 
 def normalizeParamsInsert(params, columns, options=[]):
     listParams = []
@@ -30,21 +30,23 @@ def normalizeParamsInsert(params, columns, options=[]):
 def normalizeParamsUpdate(params, columns, options=[]):
     listParams = []
     listColumns = []
-    listFails = []
-    fail = False
+    listValid = []
     for keys in columns:
         if keys in options:
+            continue 
+        listValid.append(keys)
+    for keys in params:
+        if keys in options:
             continue
-        if not keys in params:
-            fail = True
-            listFails.append(keys)
+        if not keys in columns:
+            listValid.append(keys)
             continue
         listParams.append(params[keys])
         listColumns.append(keys)
-    if fail:
+    if len(listParams) == 0:
         return {
             'response' : False,
-            'error' : f"Faltam os seguintes parametros ({', '.join(listFails)})"
+            'error' : f"Parametros validos ({', '.join(listValid)})"
         }
     return {
         'response' : True,
@@ -52,12 +54,12 @@ def normalizeParamsUpdate(params, columns, options=[]):
         'values' : ', '.join(list(map(lambda x:f"{x} = %s", listColumns)))
     } 
 
-def normalizeInsertOrder(params, columns, pedido):
+def normalizeInsertOrder(params, columns, pedido, options=[]):
     listaProdutos = params['pedidos']
     listaDeParams = []
     for item in listaProdutos:
         item['id_pedido'] = pedido
-        result = normalizeParamsInsert(item, columns)
+        result = normalizeParamsInsert(item, columns, options)
         if not result['response']:
             return result
         listaDeParams.append(result)
@@ -70,9 +72,7 @@ def normalizeParamsOrder(params, itens):
     listFails = []
     fail = False
     for keys in itens:
-        print(keys)
         if not keys in params:
-            print(itens)
             fail = True
             listFails.append(keys)
             continue

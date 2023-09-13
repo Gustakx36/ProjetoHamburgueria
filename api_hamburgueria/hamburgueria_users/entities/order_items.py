@@ -1,5 +1,4 @@
 from hamburgueria_users.connection import connection as conn
-from hamburgueria_users.normalize import normaliza as norm
 
 class Order_items:
     def __init__(self):
@@ -52,26 +51,6 @@ class Order_items:
         return {
             'response' : result,
             'text' : f"{self.string.capitalize()} foi inserido com sucesso!"
-        }
-
-    def updateSimples(self, params, id):
-        paramsNormalize = norm.normalizeParamsUpdate(params, self.selectColunas(), self.listOptionsInsertIgnore)
-        if not paramsNormalize['response']:
-            return {
-                'response' : False,
-                'text' : paramsNormalize['error']
-            }
-        paramsNormalize['params'].append(id)
-        sql = f"UPDATE {self.table} SET {paramsNormalize['values']} WHERE id = %s"
-        result = conn.execute_query(sql, paramsNormalize['params'])
-        if not result:
-            return {
-                'response' : result,
-                'text' : f"Erro ao inserir o {self.string}!"
-            }
-        return {
-            'response' : result,
-            'text' : f"{self.string.capitalize()} foi alterado com sucesso!"
         }
 
     def deleteSimples(self, id):

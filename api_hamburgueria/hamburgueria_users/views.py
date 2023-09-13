@@ -1,5 +1,5 @@
-from .entities import orders, logins, type_product, product, order_items
 from hamburgueria_users.normalize.normaliza import normalizeDecodeParams as norm
+from .entities import orders, logins, type_product, product, order_items
 from .entities.buildResponse import buildResponse as bRes
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse

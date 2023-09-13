@@ -1,13 +1,13 @@
+from hamburgueria_users.entities import order_items, product
 from hamburgueria_users.connection import connection as conn
 from hamburgueria_users.normalize import normaliza as norm
-from hamburgueria_users.entities import order_items, product
 
 class Order:
     def __init__(self):
         self.table = 'orders'
         self.primaryKey = 'id'
         self.listOptionsInsertIgnore = ['id', 'finalizado', 'data_hora', 'nome_cliente']
-        self.listOptionsUpdateIgnore = ['id', 'data_hora', 'nome_cliente']
+        self.listOptionsUpdateIgnore = ['id', 'data_hora']
         self.string = 'pedido'
 
     def selectSimples(self):
@@ -46,7 +46,7 @@ class Order:
         produtosExistem = norm.normalizaExistenciaProdutos(params)
         products = product.Product()
         for item in produtosExistem:
-            if products.selectSimplesPorId(item)['response']:
+            if not products.selectSimplesPorId(item)['response']:
                 return {
                     'response' : False,
                     'text' : 'Na lista de pedidos tem um ou mais produtos que não existem!'
@@ -60,17 +60,15 @@ class Order:
         resultOrder = conn.execute_query(sql, [])
         pedido = self.selectSimplesPorIdPedidoNovo()['id']
         if resultOrder:
-            result = norm.normalizeInsertOrder(params, ['observacao', 'preco', 'id_produto', 'id_pedido'], pedido)
+            order_item = order_items.Order_items()
+            result = norm.normalizeInsertOrder(params, order_item.selectColunas(), pedido, order_item.listOptionsInsertIgnore)
             if not result['response']:
                 return {
                     'response' : False,
                     'text' : result['error']
                 }
-            order_item = order_items.Order_items()
             for item in result['params']:
                 order_item.insertSimples(item)
-            self.listOptionsUpdateIgnore.pop(2)
-            self.listOptionsUpdateIgnore.append('finalizado')
             self.updateSimples(params, pedido)
         return {
             'response' : resultOrder,

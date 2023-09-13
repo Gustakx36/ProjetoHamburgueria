@@ -1,5 +1,5 @@
-import mysql.connector
 from mysql.connector import Error
+import mysql.connector
 import sys
 
 def connection():

@@ -1,5 +1,5 @@
-from hamburgueria_users import views
 from django.urls import path, re_path
+from hamburgueria_users import views
 
 urlpatterns = [
     path('', views.vazio),
