@@ -75,7 +75,7 @@ class Order_items:
         }
 
     def deleteSimples(self, id):
-        sql = f"DELETE FROM {self.table} WHERE id = %s"
+        sql = f"DELETE FROM {self.table} WHERE id_pedido = %s"
         result = conn.execute_query(sql, [id])
         if not result:
             return {

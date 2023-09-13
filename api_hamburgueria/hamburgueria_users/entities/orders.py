@@ -98,6 +98,12 @@ class Order:
         }
 
     def deleteSimples(self, id):
+        order_item = order_items.Order_items()
+        if not order_item.deleteSimples(id)['response']:
+            return {
+                'response' : False,
+                'text' : f"Erro ao deletar os itens desse {self.string}"
+            }
         sql = f"DELETE FROM {self.table} WHERE id = %s"
         result = conn.execute_query(sql, [id])
         if not result:

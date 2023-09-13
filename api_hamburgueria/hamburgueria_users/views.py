@@ -107,11 +107,6 @@ def orderItem(request, int):
 @csrf_exempt
 def orderItemInt(request, int):
     Object = order_items.Order_items()
-    requestJson = norm(request.body)
     if request.method == 'GET':
         return bRes.selectSimplesPorIdResponse(Object, int)
-    if request.method == 'POST':
-        return bRes.updateSimplesResponse(Object, requestJson, int)
-    if request.method == 'DELETE':
-        return bRes.deleteSimplesResponse(Object, int)
     return bRes.methodNotExist()
