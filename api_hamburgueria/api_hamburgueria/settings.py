@@ -21,6 +21,8 @@ python -m pip install pymysql
 
 python -m pip install django-cors-headers
 
+pip install -U drf-yasg
+pip install -U drf-yasg[validation]
 """
 
 
