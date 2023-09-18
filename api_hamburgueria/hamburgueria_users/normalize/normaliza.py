@@ -88,6 +88,7 @@ def normalizeParamsOrder(params, itens):
 def normalizaExistenciaProdutos(params):
     listaProdutos = []
     for item in params['pedidos']:
+        print(item)
         listaProdutos.append(item['id_produto'])
     return listaProdutos
 

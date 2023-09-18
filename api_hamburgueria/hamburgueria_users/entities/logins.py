@@ -8,7 +8,7 @@ class Login:
         self.listOptionsInsertIgnore = ['id', 'ativo', 'senha']
         self.listOptionsUpdateIgnore = ['id', 'senha']
         self.string = 'login'
-
+    
     def selectSimples(self):
         sql = f"""
             SELECT * FROM
