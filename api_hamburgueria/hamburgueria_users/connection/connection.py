@@ -6,9 +6,9 @@ def connection():
     connection = None
     try:
         connection = mysql.connector.connect(
-            host='Gustakx36.mysql.pythonanywhere-services.com',
-            user='Gustakx36', #'root'
-            passwd='Gg1234klkl', #''
+            host='localhost',
+            user='root', #'root'
+            passwd='', #''
             database='Gustakx36$hamburgueria',
             port='3306'
         )
