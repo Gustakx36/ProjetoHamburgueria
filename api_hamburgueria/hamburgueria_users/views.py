@@ -35,7 +35,7 @@ def orderInt(request, id):
     if request.method == 'GET':
         return bRes.selectSimplesPorIdResponse(Object, id)
     if request.method == 'PUT':
-        if norm(request.body) == {}:
+        if norm(request.body) == {} and 'ativo' in requestJson:
             requestJson['ativo'] = 1 if requestJson['ativo'] == 'true' else 0
         return bRes.updateSimplesResponse(Object, requestJson, id)
     if request.method == 'DELETE':
@@ -64,7 +64,7 @@ def loginInt(request, id):
     if request.method == 'GET':
         return bRes.selectSimplesPorIdResponse(Object, id)
     if request.method == 'PUT':
-        if norm(request.body) == {}:
+        if norm(request.body) == {} and 'ativo' in requestJson:
             requestJson['ativo'] = 1 if requestJson['ativo'] == 'true' else 0
         return bRes.updateSimplesResponse(Object, requestJson, id)
     if request.method == 'DELETE':

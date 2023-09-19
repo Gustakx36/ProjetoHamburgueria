@@ -23,6 +23,7 @@ python -m pip install django-cors-headers
 
 pip install -U drf-yasg
 pip install -U drf-yasg[validation]
+pip3 install whitenoise
 """
 
 
@@ -91,7 +92,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'api_hamburgueria.wsgi.application'
+# WSGI_APPLICATION = 'api_hamburgueria.wsgi.application'
 
 
 # Database
