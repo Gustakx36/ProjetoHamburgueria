@@ -180,3 +180,19 @@ def paramsProductId():
 
     params = [nome, descricao, tipo_produto, imagem, preco]
     return params
+
+def paramsVerificaLogin():
+    login = openapi.Parameter(
+        'login', 
+        openapi.IN_QUERY, 
+        description="Login do usuário", 
+        type=openapi.TYPE_STRING)
+    
+    senha = openapi.Parameter(
+        'senha', 
+        openapi.IN_QUERY, 
+        description="Senha do usuário", 
+        type=openapi.TYPE_STRING)
+
+    params = [login, senha]
+    return params

@@ -101,3 +101,28 @@ class Login:
         sql = f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'Gustakx36$hamburgueria' AND TABLE_NAME = '{self.table}';"
         result = list(map(lambda x:x['COLUMN_NAME'], conn.read_query(sql)))
         return result
+    
+    # --- Fuções extras ---
+
+    def verificaLoginExistente(self, params):
+        paramsNormalize = norm.normalizeVerificaLogin(params, ['login', 'senha'])
+        if not paramsNormalize['response']:
+            return {
+                'response' : False,
+                'text' : paramsNormalize['error']
+            }
+        sql = f"""
+            SELECT * FROM
+                {self.table}
+            WHERE
+                login = '{paramsNormalize['params'][0]}'
+            AND 
+                senha = MD5('{paramsNormalize['params'][1]}')
+        """
+        result = conn.read_query(sql)
+        print(len(result))
+        return {
+            'response' : not len(result) == 0,
+            'text' : f"{self.string.capitalize()} não foi encontrado!",
+            'object' : f"{self.string.capitalize()} existe!",
+        }

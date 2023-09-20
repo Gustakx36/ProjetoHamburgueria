@@ -24,7 +24,7 @@ def insertSimplesResponse(Objeto, params):
 
 def updateSimplesResponse(Objeto, params, id):
     exist = Objeto.selectSimplesPorId(id)
-    if exist == None:
+    if not exist['response']:
         return JsonResponse({'response' : f"{Objeto.string.capitalize()} não existe"}, status=204, json_dumps_params={'ensure_ascii': False})
     result = Objeto.updateSimples(params, id)
     if result['response']:
@@ -33,7 +33,7 @@ def updateSimplesResponse(Objeto, params, id):
 
 def deleteSimplesResponse(Objeto, id):
     exist = Objeto.selectSimplesPorId(id)
-    if exist == None:
+    if not exist['response']:
         return JsonResponse({'response' : f"{Objeto.string.capitalize()} não existe"}, status=204, json_dumps_params={'ensure_ascii': False})
     result = Objeto.deleteSimples(id)
     if result['response']:
@@ -53,3 +53,10 @@ def selectSimplesOrderItemResponse(Objeto, id_pedido):
         }, status=200, json_dumps_params={'ensure_ascii': False})
     return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})
 
+def verificaLoginExistenteResponse(Objeto, params):
+    result = Objeto.verificaLoginExistente(params)
+    if result['response']:
+        return JsonResponse({
+            'response' : True
+        }, status=200, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})

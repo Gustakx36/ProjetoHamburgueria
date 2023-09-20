@@ -29,6 +29,7 @@ urlpatterns = [
     re_path(r'^product/(?P<id>[0-9]+)/?$', views.productsInt),
     re_path(r'^orderItem/(?P<id>[0-9]+)/?$', views.orderItem),
     re_path(r'^orderUnique/(?P<id>[0-9]+)/?$', views.orderItemInt),
+    re_path(r'^verifyLogin/?$', views.loginVerify),
     re_path(r'^schemapi/?$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/?$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

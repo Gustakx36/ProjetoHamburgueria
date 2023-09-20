@@ -17,10 +17,10 @@ def vazio(request):
 @api_view(['GET', 'POST'])
 def order(request):
     Object = orders.Order()
-    requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         if norm(request.body) == {}:
             requestJson['pedidos'] = norm(requestJson['pedidos'])
         return bRes.insertSimplesResponse(Object, requestJson)
@@ -31,12 +31,10 @@ def order(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def orderInt(request, id):
     Object = orders.Order()
-    requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
     if request.method == 'GET':
         return bRes.selectSimplesPorIdResponse(Object, id)
     if request.method == 'PUT':
-        if norm(request.body) == {} and 'finalizado' in requestJson:
-            requestJson['finalizado'] = 1 if requestJson['finalizado'] == 'true' else 0
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.updateSimplesResponse(Object, requestJson, id)
     if request.method == 'DELETE':
         return bRes.deleteSimplesResponse(Object, id)
@@ -47,10 +45,10 @@ def orderInt(request, id):
 @api_view(['GET', 'POST'])
 def login(request):
     Object = logins.Login()
-    requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.insertSimplesResponse(Object, requestJson)
     return bRes.methodNotExist()
 
@@ -59,13 +57,10 @@ def login(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def loginInt(request, id):
     Object = logins.Login()
-    requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
-    print(requestJson)
     if request.method == 'GET':
         return bRes.selectSimplesPorIdResponse(Object, id)
     if request.method == 'PUT':
-        if norm(request.body) == {} and 'ativo' in requestJson:
-            requestJson['ativo'] = 1 if requestJson['ativo'] == 'true' else 0
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.updateSimplesResponse(Object, requestJson, id)
     if request.method == 'DELETE':
         return bRes.deleteSimplesResponse(Object, id)
@@ -76,10 +71,10 @@ def loginInt(request, id):
 @api_view(['GET', 'POST'])
 def type(request):
     Object = type_product.Type()
-    requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.insertSimplesResponse(Object, requestJson)
     return bRes.methodNotExist()
 
@@ -88,10 +83,10 @@ def type(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def typeInt(request, id):
     Object = type_product.Type()
-    requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
     if request.method == 'GET':
         return bRes.selectSimplesPorIdResponse(Object, id)
     if request.method == 'PUT':
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.updateSimplesResponse(Object, requestJson, id)
     if request.method == 'DELETE':
         return bRes.deleteSimplesResponse(Object, id)
@@ -102,10 +97,10 @@ def typeInt(request, id):
 @api_view(['GET', 'POST'])
 def products(request):
     Object = product.Product()
-    requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
     if request.method == 'GET':
         return bRes.selectSimplesResponse(Object)
     if request.method == 'POST':
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.insertSimplesResponse(Object, requestJson)
     return bRes.methodNotExist()
 
@@ -114,10 +109,10 @@ def products(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def productsInt(request, id):
     Object = product.Product()
-    requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
     if request.method == 'GET':
         return bRes.selectSimplesPorIdResponse(Object, id)
     if request.method == 'PUT':
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.updateSimplesResponse(Object, requestJson, id)
     if request.method == 'DELETE':
         return bRes.deleteSimplesResponse(Object, id)
@@ -137,4 +132,14 @@ def orderItemInt(request, id):
     Object = order_items.Order_items()
     if request.method == 'GET':
         return bRes.selectSimplesPorIdResponse(Object, id)
+    return bRes.methodNotExist()
+
+@csrf_exempt
+@swagger_auto_schema(methods=['get'], manual_parameters=paramsVerificaLogin())
+@api_view(['GET'])
+def loginVerify(request):
+    Object = logins.Login()
+    if request.method == 'GET':
+        requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
+        return bRes.verificaLoginExistenteResponse(Object, requestJson)
     return bRes.methodNotExist()

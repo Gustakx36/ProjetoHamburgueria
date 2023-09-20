@@ -28,6 +28,10 @@ def normalizeParamsInsert(params, columns, options=[]):
     }
 
 def normalizeParamsUpdate(params, columns, options=[]):
+    if 'finalizado' in params:
+        params['finalizado'] = 1 if params['finalizado'] == 'true' else 0
+    if 'ativo' in params:
+        params['ativo'] = 1 if params['ativo'] == 'true' else 0
     listParams = []
     listColumns = []
     listValid = []
@@ -88,13 +92,32 @@ def normalizeParamsOrder(params, itens):
 def normalizaExistenciaProdutos(params):
     listaProdutos = []
     for item in params['pedidos']:
-        print(item)
         listaProdutos.append(item['id_produto'])
     return listaProdutos
-
 
 def normalizeDecodeParams(paramString):
     try:
         return json.loads(paramString)
     except JSONDecodeError:
         return {}
+
+def normalizeVerificaLogin(params, options):
+    listParams = []
+    listFails = []
+    fail = False
+    for keys in options:
+        if keys in params:
+            listParams.append(params[keys])
+            continue
+        fail = True
+        listFails.append(keys)
+    
+    if fail:
+        return {
+            'response' : False,
+            'error' : f"Faltam os seguintes parametros ({', '.join(listFails)})"
+        }
+    return {
+        'response' : True,
+        'params' : listParams
+    }
