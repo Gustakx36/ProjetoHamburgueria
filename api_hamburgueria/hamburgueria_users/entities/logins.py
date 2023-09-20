@@ -106,11 +106,6 @@ class Login:
 
     def verificaLoginExistente(self, params):
         paramsNormalize = norm.normalizeVerificaLogin(params, ['login', 'senha'])
-        if not paramsNormalize['response']:
-            return {
-                'response' : False,
-                'text' : paramsNormalize['error']
-            }
         sql = f"""
             SELECT * FROM
                 {self.table}
@@ -120,7 +115,6 @@ class Login:
                 senha = MD5('{paramsNormalize['params'][1]}')
         """
         result = conn.read_query(sql)
-        print(len(result))
         return {
             'response' : not len(result) == 0,
             'text' : f"{self.string.capitalize()} não foi encontrado!",

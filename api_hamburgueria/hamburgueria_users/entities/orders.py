@@ -1,5 +1,5 @@
-from hamburgueria_users.entities import order_items, product
 from hamburgueria_users.connection import connection as conn
+from hamburgueria_users.entities import order_items, product
 from hamburgueria_users.normalize import normaliza as norm
 
 class Order:
