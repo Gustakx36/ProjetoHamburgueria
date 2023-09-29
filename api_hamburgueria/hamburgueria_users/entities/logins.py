@@ -106,6 +106,11 @@ class Login:
 
     def verificaLoginExistente(self, params):
         paramsNormalize = norm.normalizeVerificaLogin(params, ['login', 'senha'])
+        if not paramsNormalize['response']:
+            return {
+                'response' : False,
+                'text' : paramsNormalize['error']
+            }
         sql = f"""
             SELECT * FROM
                 {self.table}
