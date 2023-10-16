@@ -1,20 +1,21 @@
 from drf_yasg.utils import swagger_auto_schema
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
+import json
 
 def selectSimplesResponse(Objeto):
     try:
         result = Objeto.selectSimples()
         if result['response'] and len(result['object']) != 0:
-            return JsonResponse(result['object'], status=200, json_dumps_params={'ensure_ascii': False})
+            return JsonResponse(result['object'], status=200, json_dumps_params={'ensure_ascii': False}, safe=False)
         return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})
-    except:
-        return JsonResponse({'response' : 'Erro ao conectar com o banco!'}, status=500, json_dumps_params={'ensure_ascii': False})
+    except Exception as e:
+        return JsonResponse({'response' : e}, status=500, json_dumps_params={'ensure_ascii': False})
 
 def selectSimplesPorIdResponse(Objeto, id):
     try:
         result = Objeto.selectSimplesPorId(id)
         if result['response']:
-            return JsonResponse(result['object'], status=200, json_dumps_params={'ensure_ascii': False})
+            return JsonResponse(result['object'], status=200, json_dumps_params={'ensure_ascii': False}, safe=False)
         return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})
     except:
         return JsonResponse({'response' : 'Erro ao conectar com o banco!'}, status=500, json_dumps_params={'ensure_ascii': False})
@@ -58,7 +59,7 @@ def selectSimplesOrderItemResponse(Objeto, id_pedido):
     try:
         result = Objeto.selectSimples(id_pedido)
         if result['response']:
-            return JsonResponse(result['object'], status=200, json_dumps_params={'ensure_ascii': False})
+            return JsonResponse(result['object'], status=200, json_dumps_params={'ensure_ascii': False}, safe=False)
         return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})
     except:
         return JsonResponse({'response' : 'Erro ao conectar com o banco!'}, status=500, json_dumps_params={'ensure_ascii': False})
