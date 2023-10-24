@@ -16,7 +16,7 @@ class Order_items:
                 product p 
             ON p.id = oi.id_produto 
                 WHERE 
-            oi.id_pedido = 44;
+            oi.id_pedido = %s;
         """
         result = conn.read_query_bind(sql, [id_pedido], False)
         return {
