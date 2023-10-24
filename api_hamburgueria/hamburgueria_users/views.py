@@ -140,10 +140,10 @@ def orderItemInt(request, id):
         return bRes.selectSimplesPorIdResponse(Object, id)
 
 @csrf_exempt
-@swagger_auto_schema(methods=['get'], manual_parameters=paramsVerificaLogin(), responses=statusGetInt('login'))
-@api_view(['GET'])
+@swagger_auto_schema(methods=['post'], manual_parameters=paramsVerificaLogin(), responses=statusGetInt('login'))
+@api_view(['POST'])
 def loginVerify(request):
     Object = logins.Login()
-    if request.method == 'GET':
+    if request.method == 'POST':
         requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.verificaLoginExistenteResponse(Object, requestJson)
