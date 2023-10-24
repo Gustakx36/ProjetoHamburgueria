@@ -10,10 +10,13 @@ class Order_items:
 
     def selectSimples(self, id_pedido):
         sql = f"""
-            SELECT * FROM
-                {self.table}
+            SELECT oi.*, p.preco, p.descricao, p.nome FROM
+                {self.table} oi
             WHERE
                 id_pedido = %s
+            INNER JOIN 
+                product p
+            ON p.id = oi.id_produto
         """
         result = conn.read_query_bind(sql, [id_pedido], False)
         return {
