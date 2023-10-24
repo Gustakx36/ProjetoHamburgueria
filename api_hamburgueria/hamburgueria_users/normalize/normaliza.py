@@ -29,9 +29,9 @@ def normalizeParamsInsert(params, columns, options=[]):
 
 def normalizeParamsUpdate(params, columns, options=[]):
     if 'finalizado' in params:
-        params['finalizado'] = 1 if params['finalizado'] == 'true' else 0
+        params['finalizado'] = 1 if params['finalizado'] == 'true' else params['finalizado']
     if 'ativo' in params:
-        params['ativo'] = 1 if params['ativo'] == 'true' else 0
+        params['ativo'] = 1 if params['ativo'] == 'true' else params['finalizado']
     listParams = []
     listColumns = []
     listValid = []
