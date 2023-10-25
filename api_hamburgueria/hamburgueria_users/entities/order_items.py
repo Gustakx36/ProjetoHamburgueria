@@ -10,7 +10,7 @@ class Order_items:
 
     def selectSimples(self, id_pedido):
         sql = f"""
-            SELECT oi.*, p.preco, p.descricao, p.nome FROM 
+            SELECT oi.*, oi.preco, p.descricao, p.nome FROM 
                 {self.table} oi 
             INNER JOIN 
                 product p 
