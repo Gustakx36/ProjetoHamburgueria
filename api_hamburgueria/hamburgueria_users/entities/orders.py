@@ -1,6 +1,7 @@
 from hamburgueria_users.connection import connection as conn
 from hamburgueria_users.entities import order_items, product
 from hamburgueria_users.normalize import normaliza as norm
+from datetime import datetime, timedelta
 
 class Order:
     def __init__(self):
@@ -37,6 +38,8 @@ class Order:
         }
 
     def insertSimples(self, params):
+        horasMenos = timedelta(hours=3)
+        dataAtual = datetime.now() - horasMenos
         paramsOK = norm.normalizeParamsOrder(params, ['nome_cliente', 'pedidos'])
         if not paramsOK['response']:
             return {
@@ -53,11 +56,11 @@ class Order:
                 }
         sql = f"""
             INSERT INTO {self.table}
-                ()
+                (data_hora)
             VALUES
-                ()
+                (%s)
         """
-        resultOrder = conn.execute_query(sql, [])
+        resultOrder = conn.execute_query(sql, [dataAtual])
         pedido = self.selectSimplesPorIdPedidoNovo()['id']
         if resultOrder:
             order_item = order_items.Order_items()
