@@ -112,7 +112,7 @@ class Login:
                 'text' : paramsNormalize['error']
             }
         sql = f"""
-            SELECT * FROM
+            SELECT id, login, nome FROM
                 {self.table}
             WHERE
                 login = '{paramsNormalize['params'][0]}'
@@ -122,6 +122,7 @@ class Login:
         result = conn.read_query(sql)
         return {
             'response' : not len(result) == 0,
-            'text' : f"{self.string.capitalize()} não foi encontrado!",
-            'object' : f"{self.string.capitalize()} existe!",
+            'textFalse' : f"{self.string.capitalize()} não foi encontrado!",
+            'textTrue' : f"{self.string.capitalize()} existe!",
+            'object' : result
         }

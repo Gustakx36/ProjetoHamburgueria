@@ -68,9 +68,7 @@ def verificaLoginExistenteResponse(Objeto, params):
     try:
         result = Objeto.verificaLoginExistente(params)
         if result['response']:
-            return JsonResponse({
-                'response' : True
-            }, status=200, json_dumps_params={'ensure_ascii': False})
-        return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})
+            return JsonResponse(result['object'], status=200, json_dumps_params={'ensure_ascii': False}, safe=False)
+        return JsonResponse({'response' : False}, status=204, json_dumps_params={'ensure_ascii': False})
     except:
         return JsonResponse({'response' : 'Erro ao conectar com o banco!'}, status=500, json_dumps_params={'ensure_ascii': False})
