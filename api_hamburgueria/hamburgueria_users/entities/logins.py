@@ -119,7 +119,7 @@ class Login:
             AND 
                 senha = MD5('{paramsNormalize['params'][1]}')
         """
-        result = conn.read_query_bind(sql, [], True)
+        result = conn.read_query_bind(sql, [], True) if conn.read_query_bind(sql, [], True) != None else []
         return {
             'response' : not len(result) == 0,
             'textFalse' : f"{self.string.capitalize()} não foi encontrado!",
