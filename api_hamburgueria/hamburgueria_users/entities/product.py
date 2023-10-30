@@ -13,6 +13,8 @@ class Product:
         sql = f"""
             SELECT * FROM
                 {self.table}
+            WHERE
+                ativo = 1
         """
         result = conn.read_query(sql)
         return {
@@ -27,6 +29,8 @@ class Product:
                 {self.table}
             WHERE
                 id = %s
+            AND
+                ativo = 1
         """
         result = conn.read_query_bind(sql, [id], True)
         return {
