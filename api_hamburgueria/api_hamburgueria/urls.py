@@ -19,13 +19,13 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('', views.vazio),
-    re_path(r'^orders/?$', views.order),
+    re_path(r'^orders/(?P<ativo>finalizado|emprocesso|/?$)/?$', views.order),
     re_path(r'^orders/(?P<id>[0-9]+)/?$', views.orderInt),
-    re_path(r'^logins/?$', views.login),
+    re_path(r'^logins/(?P<ativo>ativo|inativo|/?$)/?$', views.login),
     re_path(r'^logins/(?P<id>[0-9]+)/?$', views.loginInt),
     re_path(r'^type/?$', views.type),
     re_path(r'^type/(?P<id>[0-9]+)/?$', views.typeInt),
-    re_path(r'^product/?$', views.products),
+    re_path(r'^product/(?P<ativo>ativo|inativo|/?$)/?$', views.products),
     re_path(r'^product/(?P<id>[0-9]+)/?$', views.productsInt),
     re_path(r'^orderItem/(?P<id>[0-9]+)/?$', views.orderItem),
     re_path(r'^orderUnique/(?P<id>[0-9]+)/?$', views.orderItemInt),
