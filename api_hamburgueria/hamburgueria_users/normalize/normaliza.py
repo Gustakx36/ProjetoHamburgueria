@@ -31,7 +31,7 @@ def normalizeParamsUpdate(params, columns, options=[]):
     if 'finalizado' in params:
         params['finalizado'] = 1 if params['finalizado'] == 'true' else params['finalizado']
     if 'ativo' in params:
-        params['ativo'] = 1 if params['ativo'] == 'true' else params['finalizado']
+        params['ativo'] = 1 if params['ativo'] == 'true' else params['ativo']
     listParams = []
     listColumns = []
     listValid = []

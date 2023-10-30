@@ -11,12 +11,19 @@ class Order:
         self.listOptionsUpdateIgnore = ['id', 'data_hora']
         self.string = 'pedido'
 
-    def selectSimples(self):
+    def selectSimples(self, ativo):
+        ativoString = "%s"
+        if ativo != None:
+            ativoString = "finalizado = %s"
+        else:
+            ativo = 1
         sql = f"""
             SELECT * FROM
                 {self.table}
+            WHERE
+                {ativoString}
         """
-        result = conn.read_query(sql)
+        result = conn.read_query_bind(sql, [ativo], False)
         return {
             'response' : not result == None,
             'text' : f"{self.string.capitalize()}s não foram encontrados!",

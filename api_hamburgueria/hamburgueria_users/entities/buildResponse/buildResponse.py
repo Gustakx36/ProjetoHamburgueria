@@ -11,6 +11,15 @@ def selectSimplesResponse(Objeto):
     except Exception as e:
         return JsonResponse({'response' : e}, status=500, json_dumps_params={'ensure_ascii': False})
 
+def selectSimplesAtvInatvResponse(Objeto, ativo):
+    try:
+        result = Objeto.selectSimples(ativo)
+        if result['response'] and len(result['object']) != 0:
+            return JsonResponse(result['object'], status=200, json_dumps_params={'ensure_ascii': False}, safe=False)
+        return JsonResponse({'response' : result['text']}, status=204, json_dumps_params={'ensure_ascii': False})
+    except Exception as e:
+        return JsonResponse({'response' : e}, status=500, json_dumps_params={'ensure_ascii': False})
+
 def selectSimplesPorIdResponse(Objeto, id):
     try:
         result = Objeto.selectSimplesPorId(id)

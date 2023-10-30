@@ -17,10 +17,15 @@ def vazio(request):
 @swagger_auto_schema(methods=['get'], responses=statusGet('pedido'))
 @swagger_auto_schema(methods=['post'], manual_parameters=paramsOrders(), responses=statusPost('pedido'))
 @api_view(['GET', 'POST'])
-def order(request):
+def order(request, ativo):
+    ativoVar = 1
+    if ativo == 'emprocesso':
+        ativoVar = 0
+    if ativo == '':
+        ativoVar = None
     Object = orders.Order()
     if request.method == 'GET':
-        return bRes.selectSimplesResponse(Object)
+        return bRes.selectSimplesAtvInatvResponse(Object, ativoVar)
     if request.method == 'POST':
         requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         if norm(request.body) == {}:
@@ -46,10 +51,15 @@ def orderInt(request, id):
 @swagger_auto_schema(methods=['get'], responses=statusGet('login'))
 @swagger_auto_schema(methods=['post'], manual_parameters=paramsLogins(), responses=statusPost('login'))
 @api_view(['GET', 'POST'])
-def login(request):
+def login(request, ativo):
+    ativoVar = 1
+    if ativo == 'inativo':
+        ativoVar = 0
+    if ativo == '':
+        ativoVar = None
     Object = logins.Login()
     if request.method == 'GET':
-        return bRes.selectSimplesResponse(Object)
+        return bRes.selectSimplesAtvInatvResponse(Object, ativoVar)
     if request.method == 'POST':
         requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.insertSimplesResponse(Object, requestJson)
@@ -100,10 +110,15 @@ def typeInt(request, id):
 @swagger_auto_schema(methods=['get'], responses=statusGet('produto'))
 @swagger_auto_schema(methods=['post'], manual_parameters=paramsProduct(), responses=statusPost('produto'))
 @api_view(['GET', 'POST'])
-def products(request):
+def products(request, ativo):
+    ativoVar = 1
+    if ativo == 'inativo':
+        ativoVar = 0
+    if ativo == '':
+        ativoVar = None
     Object = product.Product()
     if request.method == 'GET':
-        return bRes.selectSimplesResponse(Object)
+        return bRes.selectSimplesAtvInatvResponse(Object, ativoVar)
     if request.method == 'POST':
         requestJson = norm(request.body) if norm(request.body) != {} else request.GET.dict()
         return bRes.insertSimplesResponse(Object, requestJson)
